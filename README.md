@@ -55,9 +55,7 @@ DB 접속
 
 정상접속확인
 
-
 # 도커
-
 
 https://docs.docker.com/desktop/setup/install/windows-install/
 
@@ -73,12 +71,10 @@ wsl --install (윈도우서버리눅스 설치)
 
 ![](assets/20260915_160336_image.png)
 
-
 ### postgresSQL 이미지 다운로드
 
 - 이미지 : 도커 리포지토리에 미리 만들어놓은 시스템 패키지
 - 컨테이너 : 나의 도커에서 동작 중인 미리 다운로드 받은 이미지를 동작 시킨 시스템
-
 
 ##### 도커 명령어
 
@@ -95,7 +91,6 @@ docker pull postgres:latest
 ```
 
 - docker desktop 전체 검색에서 pull(다운로드)
-
 
 ### 컨테이너 실행
 
@@ -146,7 +141,6 @@ docker run --name my-postgres -e POSTGRES_PASSWORD=123456 -p 25432:5432 -d postg
 
 -- 테이블 생성
 
-
 ```sql
  create table students (
 	id int generated always as identity primary key, -- 학생 구분값 자동증가
@@ -156,7 +150,6 @@ docker run --name my-postgres -e POSTGRES_PASSWORD=123456 -p 25432:5432 -d postg
 	created_at timestamp default current_timestamp -- 현재 작성된 일자
 );
 ```
-
 
 ### 데이터 생성
 
@@ -173,8 +166,6 @@ docker run --name my-postgres -e POSTGRES_PASSWORD=123456 -p 25432:5432 -d postg
   		('박민수', 22, 'park@gmail.com'),
   		('성명건', 50, 'sung@gmail.com');
   ```
-
-
 - select 쿼리 작성 -난이도가 올라감
 
   ```
@@ -188,8 +179,6 @@ docker run --name my-postgres -e POSTGRES_PASSWORD=123456 -p 25432:5432 -d postg
   	email = 'hong@kakao.com'
   where id = 1;
   ```
-
-
 - delete 쿼리
 - ```sql
   -- 데이터 삭제(delete)
@@ -216,3 +205,61 @@ docker run --name my-postgres -e POSTGRES_PASSWORD=123456 -p 25432:5432 -d postg
 | date        | 날짜               | 2026-09-15              |
 | timestamp   | 일자(날짜와 시간)  | 2026-09-15 15:00:20.456 |
 |             |                    |                         |
+
+## 2일차
+
+### SQL 기본
+
+데이터베이스 내용에서 가장 기본적인 문법 CRUD
+
+- SQL : 스트럭처 쿼리 랭기지(구조화된 질의 언어)
+- 쿼리로 통칭
+
+#### CRUD 정의
+
+데이터** 처리의 기본 동작** 4가지
+
+
+| 구분       | 의미              | 쿼리 명령어 |
+| ---------- | ----------------- | ----------- |
+| **c**reate | 데이터 생성(삽입) | `insert`    |
+| **r**ead   | 데이터 읽기(조회) | `select`    |
+| update     | 데이터 수정(변경) | `update`    |
+| delete     | 데이터 삭제       | `delete`    |
+|            |                   |             |
+
+- 학생 관리 프로그램을 만든다고 가정하면,
+- 학생을 등록
+- 학생 목록 조회 / 특정 학생 내용 조회
+- 특정  학생 내용 조회
+- 학생 정보 수정
+- 학생 정보 삭제
+
+##### 데이터 생성
+
+- 항상 select 쿼리로 확인하세요.
+- insert 쿼리로 데이터 추가
+- ```sql
+  -- 학생 정보 추가 쿼리
+  -- 쿼리문법 문자열 무조건 ''
+  insert into students (name, age, email)
+  values ('홍길동', 20, 'hong@example.com');
+
+  -- 컬럼 순서 변경. 키와 값의 순서는 일치해야 함
+  insert into students (age, email, name)
+  values (29, 'minjun@gmail.com', '권민준');
+
+  --여러 데이터 추가
+  insert into students (name, age, email)
+  values ('홍길순', 20, 'hong@example.com'),
+  ('홍길자', 50, 'hong@example.com'),
+  ('홍길매', 30, 'hong@example.com');
+  ```
+
+##### 데이터 조회
+
+- select 쿼리로 조회 -[소스](./day02/practise02.sql)
+- 처음에는 간단하지만, 뒤로 갈 수록 어려워짐
+- ```sql
+
+  ```
