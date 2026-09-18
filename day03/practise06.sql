@@ -57,3 +57,4 @@ REFERENCES "courses" (
 "id"
 );
 
+
