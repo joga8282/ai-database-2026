@@ -56,7 +56,7 @@ pip list
 
 - 설치한 uvicorn.exe 위치가 python 설치 위치와 다르다
 - C:\Users\User\AppData\Roaming\Python\Python314\Scripts
-- 윈도우 검색- 시스템 속성 (sysdm.cpl) 실행
+- 윈도우 검색- 시스템 속성 ***(sysdm.cpl)*** 실행
 - ![](assets/20260918_164434_image.png)
 - 시스템변수에 path에서 주소를 확인
 - ![](assets/20260918_164729_image.png)
@@ -78,3 +78,75 @@ uvicorn main.app --reload --port 8000
 
   - 127.0.0.1-> localhost
   - ![](assets/20260918_170850_image.png)
+
+### fastapi 기본학습
+
+#### 웹 응답코드
+
+- 200 : ok 웹페이지에 문제없음
+- 404 : page not fount 클라이언트가 요청한 페이지나 데이터가없음
+  500 : internal server error 내부 서버 오류
+
+#### swagger ui 확인
+
+- FastAPi에서 자동으로 제공하는 APi 테스트 페이지
+- HTTP(s)://address:port//docs
+- api의 결과는 json 타입(문자열 일반적으로 "로 표현),파이썬 딕셔너리 ' 로 표현하는 것과 차이점
+
+#### url 경로
+
+- URL기본 `http(s)://address:port`
+  - address - 127.0.0.1 또는 192.168.0.105 등 아이피주소, www.naver,com 등의 도메인주소
+  - port - 0~ 65535가지의 숫자
+- `/ `- root 기본되는 페이지
+- `/students `- 추가 url.RestFull URL
+- `/students/1` - 추가 url. 경로 파라미터
+- `/?key=value&key=valu`e -url 경로 GET 쿼리 파라미터
+
+#### http(s) 메서드
+
+FastAPI는 주소와 HTTP 메서드도 파악필요
+
+
+| 메서드   | 의미             | 예시                        |
+| -------- | ---------------- | --------------------------- |
+| `get`*   | 데이터 조회      | 학생목록조회, 특정학생 조회 |
+| `post`*  | 데이터 생성      | 학생등록 / 예전 수정과 삭제 |
+| `PATCH`  | 데이터 일부 수정 | 학생 전공 수정              |
+| `PUT`    | 데이터 전체 수정 | 학생 정보 전체 수정         |
+| `DELETE` | 데이터 삭제      | 학생정보 삭제               |
+
+- get 메서드 외에는 swagger ui에서 테스트 해야한다 .post, put ,patch, delete
+
+![](assets/20260921_112820_image.png)
+
+#### 요청 본문
+
+- post나 oatch 요청시는 클라이언트가 json으로 데이터를 서버에 전달해야 함. 그 데이터를 등록 또는 수정.
+- fastAPi에서는 pydantic 패키지 모델을 사용
+- json 데이터이므로 파이썬 none 대신 null 사용
+- } 닫기전 , 는 제거 (파이썬은 허용)
+
+![](assets/20260921_122238_image.png)
+
+![](assets/20260921_122210_image.png)
+
+설치하면 좋다
+
+#### 메모리기반 (DB x) 학생 API 예제
+
+- day05/memordb.py
+- get method 함수 내용생략
+- post 메서드 작성
+- swagger 테스트
+
+
+#### HTTPExceptioon
+
+- api 상에 오류가 발생하면 오류(예외)처리를 진행
+  -  | 상태코드   | 의미                   |
+    | :--------- | ---------------------- |
+    | `200`, 201 | 요청성공, 생성 성공    |
+    | 403,`404`  | 권한 없음, 데이터 없음 |
+    | `500`      | 서버 오류              |
+    |            |                        |
