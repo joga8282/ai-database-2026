@@ -69,7 +69,7 @@ pip list
 ### fastapi 서버시작
 
 ```bash
-uvicorn main.app --reload --port 8000
+uvicorn main:app --reload --port 8000
 ```
 
 - --reload : 수정되면 곧바로 반영되어서 서버 재시작
@@ -140,7 +140,6 @@ FastAPI는 주소와 HTTP 메서드도 파악필요
 - post 메서드 작성
 - swagger 테스트
 
-
 #### HTTPExceptioon
 
 - api 상에 오류가 발생하면 오류(예외)처리를 진행
@@ -150,3 +149,96 @@ FastAPI는 주소와 HTTP 메서드도 파악필요
     | 403,`404`  | 권한 없음, 데이터 없음 |
     | `500`      | 서버 오류              |
     |            |                        |
+
+#### db 연결
+
+- 더 간단한 구조 - 우선적 구현할 구조
+- fastapi-postgresql/ (day06)
+  ├── app/
+  │   ├── __init__.py
+  │   ├── main.py         # FastAPI 실행 및 라우터
+  │   ├── database.py     # PostgreSQL 연결
+  │   ├── models.py       # SQLAlchemy 테이블 모델
+  │   └── schemas.py      # 요청·응답 데이터 형식
+  ├── .env                # DB 접속 정보
+  ├── requirements.txt    # 패키지 목록
+  └── docker-compose.yml  # PostgreSQL 실행 설정
+
+#### DB 연동 파이썬 패키지 설치
+
+- psycopg 설치
+- ```bash
+  pip install psycopg[binary]
+  ```
+- 내 개발환경(파이썬 패키지) 공유
+- ```bash
+  pip freeze > requirements.txt
+  ```
+
+  - 개발 환경 재설치
+  - ```bash
+    pip install -r requirements.txt
+    ```
+-
+- 이파일만 보내주면 인터넷만 되면 어디서나 똑같은 내용을 다운받을수 있다
+- ![](assets/20260922_093509_image.png)
+
+#### 
+
+#### 기존 postgresql students 테이블 사용
+
+- 내용 생략
+
+#### database.py
+
+- postgresql 데이터베이스 연결용 소스코드
+- 소스
+
+#### main.py
+
+- database.py
+
+#### 디버깅
+
+- Debug - 버그를 고치는 작업
+- 소스코드 작성에 60%, 디버그 40% 시간 소요
+- 디버그 단축기
+  - f5 : 디버그로 실행
+  - f9 : 브레이크포인트 토글
+  - f10: 한단계씩 실행(함수 패스)
+  - f11: 한단계씩 실행(함수내 진입)
+
+#### FastAPI 디버깅
+
+- 기존 FastAPI 코드 외 아래의 디버그 코드 추가
+- ```python
+  import uvicorn
+
+  # 기존코드 생략
+
+  if __name__=='__main__':
+      uvicorn.run(
+          'main:app',
+          host='127.0.0.1',
+          port=8000,
+
+
+  ```
+  import uvicorn
+
+  # 기존코드 생략
+
+  if \_\_name\_\_ == '\_\_main\_\_':
+  uvicorn.run(
+  'main:app',
+  host='127.0.0.1',
+  port=8000,
+  reload=True,
+  log\_level='debug'
+- `f5`(디버그 모드)로 실행
+- 디버깅 필요한 함수나 로직에 `f9`로 종단점(break point) 활성화
+- 로직 실행하면 종단점에 일시 중단
+- `f10/f11`로 한 줄씩 실행하면서 로직 처리 결과 모니터링, 조사식과 변수에서 데이터 확인
+- 오류로직 찾아서 수정
+- 다시 디버깅으로 정상동작 확인하고 완료
+-

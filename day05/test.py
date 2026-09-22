@@ -5,5 +5,10 @@ students = [
 ]
 
 for index, student in enumerate(students):
-    print(index, student)
+    print(student)
     print()
+
+for index, student in enumerate(students):
+        print(index)
+        print(student)
+        print()

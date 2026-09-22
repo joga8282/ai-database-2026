@@ -106,3 +106,4 @@ def delete_student(id: int):
                 'student': delete_student
             }
     raise HTTPException(status_code=404, detail='Student not found')
+
